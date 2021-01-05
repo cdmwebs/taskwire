@@ -1,55 +1,45 @@
 import { Controller } from "stimulus"
-import {previousItem, nextItem} from "../helpers/array_helpers";
-
-const STEPS = [0, 10, 20, 30, 60, 90, 120];
-
-const formatEstimate = (estimate) => {
-  if (estimate === 0) {
-    return "No estimate";
-  }
-  
-  const hours = Math.floor(estimate / 60);
-  const minutes = estimate % 60;
-  
-  return (hours > 0 ? `${hours}h ` : "") +
-         (minutes > 0 ? `${minutes}m` : "");
-}
+import { previousItem, nextItem } from "../helpers/array_helpers";
 
 export default class extends Controller {
-  static targets = ["value", "input"];
+  static targets = ["value", "input", "estimates"];
   // static values = {value: String};
   
-  constructor(context) {
-    super(context);
-    
-    this.estimate = 10;
-  }
-  
   connect() {  
-    // TODO: Read estimate from input
-    
-    // console.log("current value:", this.inputTarget.value);
-    
-    // this.estimate = +this.inputTarget.value;
-    // console.log("loaded estimate from input:", JSON.stringify(this.inputTarget.value))
-    
+    this.estimate = this.selectedEstimate.text;
     this.update();
   }
   
   update() {
-    this.valueTarget.innerText = formatEstimate(this.estimate);
-      
-    this.inputTarget.value = this.estimate;
+    this.valueTarget.innerText = this.estimate;
+    this.selectedEstimate = this.estimate
   }
   
   handleMinus() {
-    this.estimate = previousItem(STEPS, this.estimate);
+    this.estimate = previousItem(this.availableEstimates, this.estimate);
     this.update();
   }
   
   handlePlus() {
-    this.estimate = nextItem(STEPS, this.estimate);
+    this.estimate = nextItem(this.availableEstimates, this.estimate);
     this.update();
+  }
+
+  get availableOptions() {
+    return Array.from(this.estimatesTarget.options);
+  }
+
+  get availableEstimates() {
+    return this.availableOptions.map(el => el.text);
+  }
+
+  get selectedEstimate() {
+    return this.availableOptions.find(el => el.selected);
+  }
+
+  set selectedEstimate(estimate) {
+    this.estimatesTarget.selectedIndex =
+      this.availableOptions.findIndex(o => o.text == estimate)
   }
 }
 

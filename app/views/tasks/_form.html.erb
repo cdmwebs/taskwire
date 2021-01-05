@@ -39,11 +39,14 @@
     <%= form.text_field :status %>
   </div> -->
 
-  <div class="flex flex-row items-center space-x-4">
-    <%= render partial: "estimate", locals: {
-      name: "task[estimate]",
-      value: task.estimate
-    } %>
+  <div class="flex flex-row items-center space-x-4" data-controller="estimate">
+    <div class="estimate-select">
+      <span class="button left" data-action="click->estimate#handleMinus">-</span>
+      <span class="value" data-estimate-target="value"></span>
+      <span class="button right" data-action="click->estimate#handlePlus">+</span>
+    </div>
+
+    <%= form.collection_select :estimate, Estimate.to_select, :minutes, :formatted, { include_blank: false }, { class: 'hidden', data: { 'estimate-target': 'estimates' } } %>
     
     <div class="flex-grow"></div>
     
