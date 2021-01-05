@@ -1,31 +1,32 @@
-import {Turbo} from "@hotwired/turbo-rails"
 import { Controller } from "stimulus"
 
-  static targets = ["deleteButtonLabel"]
 export default class extends Controller {
+  static targets = ["deleteButtonLabel", "checkbox", "taskIds", "bar"]
+  static values = { batchDestroyUrl: String }
   
   connect() {
     this.update();
   }
-  
-  subscribe() {
-	  return [
-		  tasks.subscribe(() => this.update())
-	  ]
-  }
-  
+
   update() {
-    const {selectedId} = tasks.getState();
-    this.element.classList.toggle('inactive', !selectedId);
-    
-    const countSelected = selectedId ? 1 : 0;
-    this.deleteButtonLabelTarget.innerText = `Delete (${countSelected})`;
+    this.barTarget.classList.toggle('inactive', this.countSelected == 0)
+    this.deleteButtonLabelTarget.innerText = `Delete (${this.countSelected})`;
   }
-  
-  deleteTasks() {
-    const {selectedId} = tasks.getState();
-    const ids = [selectedId].join(",");
-    Turbo.visit(`/tasks/batch_destroy?ids=${ids}`);
-    tasks.setState({selectedId: undefined});
+
+  check() {
+    this.update()
+  }
+
+  deleteTasks(ev) {
+    const ids = this.selectedTasks.map(el => el.value);
+    this.taskIdsTarget.value = ids;
+  }
+
+  get selectedTasks() {
+    return this.checkboxTargets.filter(el => el.checked);
+  }
+
+  get countSelected() {
+    return this.selectedTasks.length;
   }
 }

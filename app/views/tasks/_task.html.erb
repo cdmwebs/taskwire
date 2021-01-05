@@ -2,7 +2,7 @@
 
   <li class="task" data-controller="task" data-action="dblclick->task#edit">
     <h3>
-      <span class="checkbox"></span>
+      <%= check_box_tag "ids[]", task.id, false, class: 'checkbox', data: { 'action-bar-target': 'checkbox', action: 'action-bar#check' } %>
       <span><%= task.title %></span>
       
       <a class="hidden pl-2 text-blue-500 underline" href="<%= edit_task_path(task) %>" data-task-target="editLink">edit</a>

@@ -13,7 +13,7 @@
     
   </head>
 
-  <body class="h-full font-sans">
+  <body class="h-full font-sans" data-controller="action-bar" data-action-bar-batch-destroy-url-value="<%= batch_destroy_tasks_path -%>">
     <div class="h-full flex flex-row">
       <div class="w-64 bg-gray-100 p-4">sidebar</div>
       <div class="py-12 px-16 bg-gray-50 flex-grow overflow-auto" data-controller="main-pane" data-action="click->main-pane#handleClick"><%= yield %></div>

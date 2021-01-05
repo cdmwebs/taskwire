@@ -60,8 +60,8 @@ class TasksController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  # GET /tasks/batch_destroy?ids=1,2,3,4
+
+  # DELETE /tasks/batch_destroy?ids=1,2,3,4
   def batch_destroy
     unless params[:ids]
       raise ActionController::BadRequest.new(), "missing ids param"
