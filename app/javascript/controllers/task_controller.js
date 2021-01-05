@@ -1,9 +1,7 @@
-import {tasks} from "../stores/tasks_store";
-import ConnectedController from "./connected_controller";
+import { Controller } from "stimulus"
 import {Turbo} from "@hotwired/turbo-rails"
 
-
-class TaskController extends ConnectedController {
+export default class extends Controller {
   static values = {id: String, editUrl: String};
   static targets = ["editLink"];
   
@@ -39,4 +37,3 @@ class TaskController extends ConnectedController {
   }
 }
 
-export default TaskController;

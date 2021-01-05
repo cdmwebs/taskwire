@@ -1,12 +1,10 @@
-import ConnectedController from "./connected_controller";
-import {tasks} from "../stores/tasks_store";
 import {Turbo} from "@hotwired/turbo-rails"
+import { Controller } from "stimulus"
 
-export default class extends ConnectedController {
   static targets = ["deleteButtonLabel"]
+export default class extends Controller {
   
   connect() {
-    super.connect();
     this.update();
   }
   
