@@ -1,6 +1,6 @@
 <h1>Editing Task</h1>
 
-<%= turbo_frame_tag "edit_task_#{@task.id}" do %>
+<%= turbo_frame_tag dom_id(@task, :edit) do %>
 	<%= render 'form', task: @task %>
 <% end %>
 

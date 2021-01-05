@@ -1,12 +1,6 @@
-<%= turbo_frame_tag "edit_task_#{task.id}" do %>
+<%= turbo_frame_tag dom_id(task, :edit) do %>
 
-  <li
-    class="task"
-    data-controller="task"
-    data-action="click->task#handleClick dblclick->task#handleDoubleClick"
-    data-task-id-value="<%= task.id %>"
-    data-task-edit-url-value="<%= edit_task_path(task) %>"
-  >
+  <li class="task" data-controller="task" data-action="dblclick->task#edit">
     <h3>
       <span class="checkbox"></span>
       <span><%= task.title %></span>
